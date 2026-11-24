@@ -139,13 +139,9 @@ export function getProductStyle(product: MocProduct): ProductStyle {
   return "Men's"
 }
 
+/** A–Z by product name for the products grid. */
 export function sortCatalogForGrid(products: MocProduct[]): MocProduct[] {
-  return [...products].sort((a, b) => {
-    const styleDiff =
-      (getProductStyle(a) === "Women's" ? 1 : 0) - (getProductStyle(b) === "Women's" ? 1 : 0)
-    if (styleDiff !== 0) return styleDiff
-    return a.sort_order - b.sort_order
-  })
+  return [...products].sort((a, b) => a.name.localeCompare(b.name, undefined, { sensitivity: 'base' }))
 }
 
 export async function fetchActiveProducts(): Promise<MocProduct[]> {
